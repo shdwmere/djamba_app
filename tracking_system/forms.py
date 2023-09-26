@@ -12,6 +12,8 @@ class PedidosForm(forms.ModelForm):
             'cpf_cliente': forms.TextInput(),
             'nome_cliente': forms.TextInput(),
             'email_cliente': forms.TextInput(),
-            'data_registro': forms.TextInput(),
-            
+            'data_registro': forms.DateInput(),
         }
+
+class PesquisaForm(forms.Form):
+    codigo_rastreio = forms.CharField(max_length=14, label="Track Code")
