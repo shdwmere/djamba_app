@@ -1,0 +1,15 @@
+<!-- being used in: views.py -- update operation -->
+{% extends 'front_plataforma/base.html' %}
+{% block conteudo %}
+<form method="post" class="flex flex-col gap-3" action="{% url 'atualizar_pedido' pk=form.instance.pk %}" class="flex flex-col gap-7">
+    {% csrf_token %}
+    <input type="text" name="id_pedido" class="border-2 border-red-600" value="{{ form.instance.id_pedido }}">
+    <input type="text" name="codigo_rastreio" class="border-2 border-red-600" value="{{ form.instance.codigo_rastreio }}">
+    <input type="text" name="cpf_cliente" class="border-2 border-red-600" value="{{ form.instance.cpf_cliente }}">
+    <input type="text" name="nome_cliente" class="border-2 border-red-600" value="{{ form.instance.nome_cliente }}">
+    <input type="text" name="email_cliente" class="border-2 border-red-600" value="{{ form.instance.email_cliente }}">
+    <input type="text" name="data_registro" class="border-2 border-red-600" value="{{ form.instance.data_registro }}">
+
+    <button type="submit" class="bg-blue-600 p-5 rounded-xl text-xl text-white font-semibold">Atualizar Produto</button>
+</form>
+{% endblock %}

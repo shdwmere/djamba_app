@@ -1,0 +1,15 @@
+<!-- criar_pedido Template -->
+{% extends 'front_plataforma/base.html' %}
+{% block conteudo %}
+
+<form method="post" action="{% url 'criar_pedido' %}" class="flex flex-col gap-7">
+    {% csrf_token %}
+        <input type="text" name="id_pedido" class="px-6 py-3 border-2 border-gray-300 bg-gray-100" placeholder="ID pedido.">
+        <input type="text" name="codigo_rastreio" class="px-6 py-3 border-2 border-gray-300 bg-gray-100" placeholder="Cód. Rastreio.">
+        <input type="text" name="cpf_cliente" class="px-6 py-3 border-2 border-gray-300 bg-gray-100" placeholder="CPF.">
+        <input type="text" name="nome_cliente" class="px-6 py-3 border-2 border-gray-300 bg-gray-100" placeholder="Nome.">
+        <input type="text" name="email_cliente" class="px-6 py-3 border-2 border-gray-300 bg-gray-100" placeholder="Email.">
+        <input type="submit" value="Create" class="p-6  bg-green-600 font-semibold text-white">
+</form>
+
+{% endblock %}

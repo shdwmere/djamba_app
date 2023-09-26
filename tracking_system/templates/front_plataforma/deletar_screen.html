@@ -1,0 +1,10 @@
+<!-- being used in: views.py -- update operation -->
+{% extends 'front_plataforma/base.html' %}
+{% block conteudo %}
+<form method="post" action="{% url 'deletar_pedido' pk=pedido.pk %}" class="flex flex-col gap-7">
+    {% csrf_token %}
+    <h1 class="font-semibold text-2xl text-red-600">Tem certeza que deseja deletar este pedido?</h1>
+    <button type="submit" class="px-6 py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white font-semibold text-xl">SIM, DELETAR</button>
+    <a href="{% url 'ler_todos_pedidos' %}" class="px-6 text-center py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xl">NÃO, VOLTAR</a>
+</form>
+{% endblock %}
