@@ -48,8 +48,9 @@ def criar_pedido(request):
     if request.method == 'POST':
         form = PedidosForm(request.POST)
         if form.is_valid():
+            print("Pedido criado com sucesso.")
             form.save()
-            return redirect('ler_todos_pedidos')
+            return redirect('criar_pedido')
         print(form.errors)
     return render(request, 'front_plataforma/create_screen.html', {'form': form})
 
