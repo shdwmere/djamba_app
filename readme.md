@@ -1,5 +1,6 @@
 
 # MambaLog - Django version
+# create_branch - Versão que possibilita edição & inserção de datas.
 Projeto Mambalog originalmente escrito em TypeScript agora sendo feito no ambiente Python com o framework Django e o banco de dados mySQL.
 
 - Run with `python \.manage.py runserver`

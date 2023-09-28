@@ -2,7 +2,7 @@ import random
 
 
 
-for _ in range(45):
+for _ in range(2):
     onze_chars = random.randint(11111111111, 99999999999)
     doze_chars = random.randint(111111111111, 999999999999)
 
