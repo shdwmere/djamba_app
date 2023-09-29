@@ -1,5 +1,5 @@
 <!-- being used in: views.py -- update operation -->
-{% extends 'front_plataforma/base.html' %}
+{% extends 'frontend/base.html' %}
 {% block conteudo %}
 <form method="post" class="flex flex-col gap-3" action="{% url 'atualizar_pedido' pk=form.instance.pk %}" class="flex flex-col gap-7">
     {% csrf_token %}

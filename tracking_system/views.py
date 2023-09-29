@@ -6,14 +6,14 @@ from .forms import PedidosForm, PesquisaForm
 from django.core.mail import send_mail
 
 def home(request):
-    return render(request, 'front_plataforma/home.html')
+    return render(request, 'core/home.html')
 
-# Leitura
+# Listar todos / Filtrar pedidos
 def ler_todos_pedidos(request):
     pedidos = {
         'pedidos': Pedidos.objects.all()
     }
-    return render(request, 'front_plataforma/read_screen.html', pedidos)
+    return render(request, 'utils/read_screen.html', pedidos)
 
 def filtrar_pedidos(request, data_filtrada = None):
     data_filtrada = request.GET.get('data_filtrada')
@@ -29,8 +29,10 @@ def filtrar_pedidos(request, data_filtrada = None):
         'contagem': contagem
     }
 
-    return render(request, 'front_plataforma/filter_screen.html', context)
+    return render(request, 'core/filter_screen.html', context)
 
+
+# Rastreio
 def track_code(request):
     if request.method == 'POST':
         form = PesquisaForm(request.POST)
@@ -38,26 +40,14 @@ def track_code(request):
             codigo_rastreio = form.cleaned_data['codigo_rastreio']
             # Execute a consulta com base no código de rastreio
             pedidos = Pedidos.objects.filter(codigo_rastreio=codigo_rastreio)
-            return render(request, 'front_plataforma/track_screen.html', {'pedidos': pedidos})
+            return render(request, 'core/track_screen.html', {'pedidos': pedidos})
     else:
         form = PesquisaForm()
     
-    return render(request, 'front_plataforma/home.html', {'form': form})
-
-# Criação
-def criar_pedido(request):
-    form = PedidosForm()
-    if request.method == 'POST':
-        form = PedidosForm(request.POST)
-        if form.is_valid():
-            print("Pedido criado com sucesso.")
-            form.save()
-            return redirect('criar_pedido')
-        print(form.errors)
-    return render(request, 'front_plataforma/create_screen.html', {'form': form})
+    return render(request, 'frontend/home.html', {'form': form})
 
 
-# Modificação
+# Modificação (Update, Delete)
 def atualizar_pedido(request, pk):
     pedido = get_object_or_404(Pedidos, pk=pk)
     if request.method == 'POST':
@@ -67,22 +57,22 @@ def atualizar_pedido(request, pk):
             return redirect('ler_todos_pedidos')
     else:
         form = PedidosForm(instance=pedido)
-    return render(request, 'front_plataforma/atualizar_screen.html', {'form': form})
+    return render(request, 'utils/atualizar_screen.html', {'form': form})
 
 def deletar_pedido(request, pk):
     pedido = get_object_or_404(Pedidos, pk=pk)
     if request.method == 'POST':
         pedido.delete()
         return redirect('ler_todos_pedidos')
-    return render(request, 'front_plataforma/deletar_screen.html', {'pedido': pedido})
+    return render(request, 'utils/deletar_screen.html', {'pedido': pedido})
 
 
-# Ações
+# Ações (mailing)
 def enviar_email(request):
     subject = 'tracking service'
     message = 'testando mailing da aplicação.'
     from_email = 'suporte@www.mambalog.tech'
-    recipient_list = ['destinatario@mail.com']
+    recipient_list = ['caio.souza@topshipping.com.br']
 
     context = {
         'subject': subject,
@@ -95,7 +85,7 @@ def enviar_email(request):
         try:
             send_mail(subject, message, from_email, recipient_list)
             # página de sucesso
-            return render(request, 'front_plataforma/email_enviado.html', context)
+            return render(request, 'mail/email_enviado.html', context)
         except BadHeaderError:
             # Lida com cabeçalhos de e-mail malformados
             return HttpResponse('Erro no envio do e-mail. Por favor, revise os detalhes.')
@@ -103,5 +93,5 @@ def enviar_email(request):
             # Lida com outros erros de envio de e-mail
             return HttpResponse(f'Erro no envio do e-mail: {str(e)}')
     
-    return render(request, 'front_plataforma/email_screen.html', context)
+    return render(request, 'mail/email_screen.html', context)
     

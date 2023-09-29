@@ -1,5 +1,5 @@
 <!-- being used in: views.py -- update operation -->
-{% extends 'front_plataforma/base.html' %}
+{% extends 'frontend/base.html' %}
 {% block conteudo %}
 <form method="post" action="{% url 'deletar_pedido' pk=pedido.pk %}" class="flex flex-col gap-7">
     {% csrf_token %}
