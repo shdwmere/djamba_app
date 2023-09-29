@@ -1,7 +1,9 @@
 # produtos_files/views.py
+from django.http import BadHeaderError, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Pedidos
 from .forms import PedidosForm, PesquisaForm
+from django.core.mail import send_mail
 
 def home(request):
     return render(request, 'front_plataforma/home.html')
@@ -75,3 +77,31 @@ def deletar_pedido(request, pk):
     return render(request, 'front_plataforma/deletar_screen.html', {'pedido': pedido})
 
 
+# Ações
+def enviar_email(request):
+    subject = 'tracking service'
+    message = 'testando mailing da aplicação.'
+    from_email = 'suporte@www.mambalog.tech'
+    recipient_list = ['destinatario@mail.com']
+
+    context = {
+        'subject': subject,
+        'message': message,
+        'from_email': from_email,
+        'recipient_list': recipient_list
+    }
+
+    if request.method == 'POST':
+        try:
+            send_mail(subject, message, from_email, recipient_list)
+            # página de sucesso
+            return render(request, 'front_plataforma/email_enviado.html', context)
+        except BadHeaderError:
+            # Lida com cabeçalhos de e-mail malformados
+            return HttpResponse('Erro no envio do e-mail. Por favor, revise os detalhes.')
+        except Exception as e:
+            # Lida com outros erros de envio de e-mail
+            return HttpResponse(f'Erro no envio do e-mail: {str(e)}')
+    
+    return render(request, 'front_plataforma/email_screen.html', context)
+    

@@ -1,0 +1,8 @@
+<!-- email_screen.html Template -->
+{% extends 'front_plataforma/base.html' %}
+{% block conteudo %}
+<div class="flex flex-col gap-5">
+    <h1 class="text-green-600 text-5xl">E-mail enviado com sucesso!</h1>
+    <a href="{% url 'home' %}" class="bg-blue-700 rounded-xl text-white font-semibold p-2">Home</a>
+</div>
+{% endblock %}

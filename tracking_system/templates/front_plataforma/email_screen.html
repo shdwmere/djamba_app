@@ -1,0 +1,35 @@
+<!-- email_screen.html Template -->
+{% extends 'front_plataforma/base.html' %}
+{% block conteudo %}
+<h1 class="font-bold text-xl">detalhes do e-mail</h1>
+<br/>
+<table class="border-3 rounded-2xl p-5 rounded-lg table-auto mx-auto text-center">
+    <tr>
+        <th class="px-4 py-2 text-lg border border-gray-400 rounded-lg">assunto</th>
+        <th class="px-4 py-2 text-lg border border-gray-400 rounded-lg">mensagem</th>
+        <th class="px-4 py-2 text-lg border border-gray-400 rounded-lg">e-mail host</th>
+        <th class="px-4 py-2 text-lg border border-gray-400 rounded-lg">destinatário</th>
+    </tr>
+    <tr>
+        <td class="border border-gray-400 px-2 py-2">
+            <p>{{ subject }}</p>
+        </td>
+        <td class="border border-gray-400 px-2 py-2">
+            <p>{{ message }}</p>
+        </td>
+        <td class="border border-gray-400 px-2 py-2">
+            <p>{{ from_email }}</p>
+        </td>
+        <td class="border border-gray-400 px-2 py-2">
+            <p>{{ recipient_list }}</p>
+        </td>
+    </tr>
+</table>
+
+<br>
+
+<form method="post" action="{% url 'enviar_email' %}">
+    {% csrf_token %}
+    <input type="submit" class="bg-green-600 p-4 rounded-xl font-semibold text-white" value="enviar e-mail">
+</form>
+{% endblock %}
