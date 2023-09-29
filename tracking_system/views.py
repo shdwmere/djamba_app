@@ -1,9 +1,15 @@
 # produtos_files/views.py
-from django.http import BadHeaderError, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.mail import send_mail
 from .models import Pedidos
 from .forms import PedidosForm, PesquisaForm
-from django.core.mail import send_mail
+
+# api
+from django.http import BadHeaderError, HttpResponse
+from .serializers import PedidosSerializer
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+
 
 def home(request):
     return render(request, 'core/home.html')
@@ -95,3 +101,15 @@ def enviar_email(request):
     
     return render(request, 'mail/email_screen.html', context)
     
+
+# API ViewSet
+class PedidosViewSet(viewsets.ModelViewSet):
+    queryset = Pedidos.objects.all()
+    serializer_class = PedidosSerializer
+
+    def create_item(self, request):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
